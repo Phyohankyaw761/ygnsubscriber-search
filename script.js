@@ -1,6 +1,6 @@
 let allData = [];
 
-fetch('https://drive.google.com/uc?export=download&id=1kiCWRgDm0RG_D-y03v4JxWscnmPa7Haa')
+fetch('https://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=1kiCWRgDm0RG_D-y03v4JxWscnmPa7Haa') // Using CORS Proxy
   .then(response => response.text())
   .then(csv => {
     Papa.parse(csv, {
@@ -29,7 +29,9 @@ fetch('https://drive.google.com/uc?export=download&id=1kiCWRgDm0RG_D-y03v4JxWscn
       }
     });
   })
-  .catch(error => console.error('Error fetching data:', error));
+  .catch(error => {
+    console.error("Error fetching data:", error);
+  });
 
 function showResults(data) {
   const container = document.getElementById('results');
