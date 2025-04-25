@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Search Subscriber Info</title>
   <style>
     body {
@@ -11,7 +12,13 @@
     }
 
     h2 {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
+    }
+
+    .powered {
+      color: #007BFF;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
 
     input[type="text"] {
@@ -38,28 +45,16 @@
     .field span {
       font-weight: bold;
     }
-
-    .powered-by {
-      color: #007BFF;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
   </style>
 </head>
 <body>
 
-  <!-- "Powered by" text above the search box -->
-  <p class="powered-by">Powered by Phyo Han Kyaw</p>
-
+  <div class="powered">🔷 powered by Phyo Han Kyaw</div>
   <h2>🔍 Search Subscriber (By Name, Node, or ONT Serial)</h2>
-  <input type="text" id="searchBox" placeholder="Type name, node, or ONT serial...">
+  <input type="text" id="searchBox" placeholder="Type name, node, or ONT serial..." />
 
   <div id="results"></div>
 
-  <!-- PapaParse library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-
-  <!-- Your JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
