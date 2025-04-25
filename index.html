@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Search Subscriber Info</title>
   <style>
     body {
@@ -11,14 +10,13 @@
       background-color: #f8f8f8;
     }
 
-    h2 {
-      margin-bottom: 10px;
+    h1 {
+      color: #007BFF;
+      margin-bottom: 5px;
     }
 
-    .powered {
-      color: #007BFF;
-      font-weight: bold;
-      margin-bottom: 10px;
+    h2 {
+      margin-bottom: 20px;
     }
 
     input[type="text"] {
@@ -49,12 +47,18 @@
 </head>
 <body>
 
-  <div class="powered">🔷 powered by Phyo Han Kyaw</div>
+  <h1>Power by Phyo Han Kyaw</h1>
   <h2>🔍 Search Subscriber (By Name, Node, or ONT Serial)</h2>
-  <input type="text" id="searchBox" placeholder="Type name, node, or ONT serial..." />
+
+  <input type="text" id="searchBox" placeholder="Type name, node, or ONT serial..." disabled />
 
   <div id="results"></div>
 
+  <!-- Include PapaParse CSV parser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+  <!-- Link to your script.js -->
   <script src="script.js"></script>
+
 </body>
 </html>
