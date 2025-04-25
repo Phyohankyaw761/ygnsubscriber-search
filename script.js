@@ -1,32 +1,43 @@
 let allData = [];
 
+function parseCSV(csv) {
+  const lines = csv.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim());
+
+  allData = lines.slice(1).map(line => {
+    const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v =>
+      v.replace(/^"|"$/g, '').trim()
+    );
+    const entry = {};
+    headers.forEach((header, i) => {
+      entry[header] = values[i]?.trim() || '';
+    });
+    return entry;
+  });
+
+  // Trigger default view or reset if needed
+  showResults(allData);
+}
+
 fetch('data.csv')
   .then(response => response.text())
   .then(csv => {
-    const lines = csv.trim().split('\n');
-    const headers = lines[0].split(',').map(h => h.trim());
+    parseCSV(csv);
 
-    console.log("Headers found in CSV:", headers); // Check headers in console
+    const searchInput = document.getElementById('searchBox');
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+      if (!query) {
+        showResults(allData); // Show all when input is cleared
+        return;
+      }
 
-    allData = lines.slice(1).map(line => {
-      const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v =>
-        v.replace(/^"|"$/g, '').trim()
-      );
-
-      const entry = {};
-      headers.forEach((header, i) => {
-        entry[header] = values[i]?.replace(/^"|"$/g, '').trim() || '';
-      });
-      return entry;
-    });
-
-    document.getElementById('searchBox').addEventListener('input', function () {
-      const query = this.value.toLowerCase().trim();
       const filtered = allData.filter(entry =>
         Object.values(entry).some(value =>
           value.toLowerCase().includes(query)
         )
       );
+
       showResults(filtered);
     });
   });
