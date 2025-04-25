@@ -1,6 +1,7 @@
 let allData = [];
 
-fetch('data.csv')
+const lines = csvData.trim().split('\n');
+
   .then(response => response.text())
   .then(csv => {
     const lines = csv.trim().split('\n');
