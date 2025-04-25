@@ -18,7 +18,6 @@ fetch('data.csv')
       return entry;
     });
 
-    // Enable the search after data is loaded
     document.getElementById('searchBox').disabled = false;
 
     document.getElementById('searchBox').addEventListener('input', function () {
@@ -32,8 +31,8 @@ fetch('data.csv')
     });
   })
   .catch(error => {
-    console.error("Error loading CSV:", error);
-    document.getElementById('results').innerHTML = '<p style="color:red;">❌ Failed to load data.csv</p>';
+    console.error("CSV Load Error:", error);
+    document.getElementById('results').innerHTML = '<p style="color:red;">❌ CSV file failed to load.</p>';
   });
 
 function showResults(data) {
