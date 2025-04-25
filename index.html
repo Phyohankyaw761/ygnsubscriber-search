@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Search Subscriber Info</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
       padding: 30px;
       background-color: #f8f8f8;
     }
+
     h2 {
       margin-bottom: 20px;
     }
+
     .powered {
       color: blue;
       font-weight: bold;
       margin-bottom: 10px;
     }
+
     input[type="text"] {
       padding: 10px;
       width: 100%;
@@ -25,6 +27,7 @@
       font-size: 16px;
       margin-bottom: 20px;
     }
+
     .card {
       background: #fff;
       padding: 20px;
@@ -33,9 +36,11 @@
       margin-bottom: 15px;
       max-width: 600px;
     }
+
     .field {
       margin-bottom: 8px;
     }
+
     .field span {
       font-weight: bold;
     }
@@ -45,10 +50,12 @@
 
   <div class="powered">Powered by Phyo Han Kyaw</div>
   <h2>🔍 Search Subscriber (By Name, Node, or ONT Serial)</h2>
-  <input type="text" id="searchBox" placeholder="Type name, node, or ONT serial..." />
+  <input type="text" id="searchBox" placeholder="Type name, node, or ONT serial...">
 
-  <div id="results">Loading data...</div>
+  <div id="results"></div>
 
+  <!-- Your search script -->
   <script src="script.js"></script>
+
 </body>
 </html>

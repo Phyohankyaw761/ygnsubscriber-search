@@ -1,39 +1,35 @@
 let allData = [];
 
-fetch('https://drive.google.com/file/d/1kiCWRgDm0RG_D-y03v4JxWscnmPa7Haa/view?usp=sharing')
+fetch('https://drive.google.com/uc?export=download&id=1kiCWRgDm0RG_D-y03v4JxWscnmPa7Haa')
   .then(response => response.text())
   .then(csv => {
-    const lines = csv.trim().split('\n');
-    const headers = lines[0].split(',').map(h => h.trim());
+    Papa.parse(csv, {
+      header: true,
+      skipEmptyLines: true,
+      complete: function(results) {
+        allData = results.data;
 
-    allData = lines.slice(1).map(line => {
-      const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v =>
-        v.replace(/^"|"$/g, '').trim()
-      );
-
-      const entry = {};
-      headers.forEach((header, i) => {
-        entry[header] = values[i]?.replace(/^"|"$/g, '').trim() || '';
-      });
-      return entry;
-    });
-
-    document.getElementById('searchBox').disabled = false;
-
-    document.getElementById('searchBox').addEventListener('input', function () {
-      const query = this.value.toLowerCase().trim();
-      const filtered = allData.filter(entry =>
-        Object.values(entry).some(value =>
-          value.toLowerCase().includes(query)
-        )
-      );
-      showResults(filtered);
+        // Event listener to handle input changes
+        document.getElementById('searchBox').addEventListener('input', function () {
+          const query = this.value.toLowerCase().trim();
+          
+          // If search box is cleared, show all data
+          if (query === '') {
+            showResults(allData);
+            return;
+          }
+          
+          const filtered = allData.filter(entry =>
+            Object.values(entry).some(value =>
+              value?.toLowerCase().includes(query)
+            )
+          );
+          showResults(filtered);
+        });
+      }
     });
   })
-  .catch(error => {
-    console.error("CSV Load Error:", error);
-    document.getElementById('results').innerHTML = '<p style="color:red;">❌ CSV file failed to load.</p>';
-  });
+  .catch(error => console.error('Error fetching data:', error));
 
 function showResults(data) {
   const container = document.getElementById('results');
@@ -50,7 +46,7 @@ function showResults(data) {
 
     card.innerHTML = `
       <div class="field"><span>1) Account:</span> ${entry['Account'] || ''}</div>
-      <div class="field"><span>2) Scriber Name:</span> ${entry['Subscriber name'] || ''}</div>
+      <div class="field"><span>2) Subscriber Name:</span> ${entry['Subscriber name'] || ''}</div>
       <div class="field"><span>3) Phone Number:</span> ${entry['Phone number'] || ''}</div>
       <div class="field"><span>4) Address:</span> ${entry['Installation address'] || ''}</div>
       <div class="field"><span>5) Node Name:</span> ${entry['Subscriber node'] || ''}</div>
