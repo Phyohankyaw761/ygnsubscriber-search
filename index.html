@@ -2,24 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Search Subscriber Info</title>
+  <title>Subscriber Search</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       padding: 30px;
-      background-color: #f8f8f8;
+      background-color: #f0f2f5;
     }
-
     h2 {
       margin-bottom: 20px;
     }
-
     .powered {
       color: blue;
       font-weight: bold;
       margin-bottom: 10px;
     }
-
     input[type="text"] {
       padding: 10px;
       width: 100%;
@@ -27,7 +24,6 @@
       font-size: 16px;
       margin-bottom: 20px;
     }
-
     .card {
       background: #fff;
       padding: 20px;
@@ -36,11 +32,9 @@
       margin-bottom: 15px;
       max-width: 600px;
     }
-
     .field {
       margin-bottom: 8px;
     }
-
     .field span {
       font-weight: bold;
     }
@@ -50,15 +44,71 @@
 
   <div class="powered">Powered by Phyo Han Kyaw</div>
   <h2>🔍 Search Subscriber (By Name, Node, or ONT Serial)</h2>
-  <input type="text" id="searchBox" placeholder="Type name, node, or ONT serial...">
+  <input type="text" id="searchBox" placeholder="Type name, node, or ONT serial..." disabled>
 
   <div id="results"></div>
 
-  <!-- Include CSV data -->
-  <script src="data.js"></script>
+  <!-- Include CSV data as JS string -->
+  <script>
+    const csvData = `STT,Account,Department,Contract,Subscriber code,Subscriber name,ID number,Phone number,Account gline,Installation address,Service type,ONT ID,Device code,Port on card,Splitter,Port splitter,Subscriber node,Length of subscriber cable,ONT serial,Profile,STB type,Status,STB serial,ONT type
+1,ygn_gftth_winkth47,MYT_YGN_TEAM04_Mayangone,,,Ko Than Htut Win,13/ Lalana (N) 011339,9789264765,ygn_g_line_winkth61,"Yaw Min Gyi Ward, 16.7840,96.1573, No.44/1, Bo Yar Nyunt st, Yaw Min Gyi Ward, Dagon, Dagon, Yangon",F,48,YGN0204OLT001,1-1-1-2,YGN0204-DN01-SN02-SPL01-16,15,YGN0204-DN01-SN02,350,ZTEGD03C2CAB,,,Deployment,,
+2,ygn_gftth_kyawua85,MYT_YGN_TEAM04_Mayangone,,,U Aung Kyaw,9/-------Makana(N)003423,95506796,ygn_g_line_kyawua104,"Yaw Min Gyi Ward, 16.783528,96.155020,Na Waddy st,Yaw Min Gyi Ward, Dagon, Dagon, Yangon",F,3,YGN0204OLT001,1-1-1-2,YGN0204-DN01-SN02-SPL01-16,3,YGN0204-DN01-SN02,420,SCOM36A13BC2,,,Deployment,,`;
+  </script>
 
-  <!-- Your search script -->
-  <script src="script.js"></script>
+  <script>
+    let allData = [];
 
+    const lines = csvData.trim().split('\n');
+    const headers = lines[0].split(',').map(h => h.trim());
+
+    allData = lines.slice(1).map(line => {
+      const values = line.split(/,(?=(?:(?:[^"]*\"){2})*[^"]*$)/).map(v =>
+        v.replace(/^"|"$/g, '').trim()
+      );
+      const entry = {};
+      headers.forEach((header, i) => {
+        entry[header] = values[i] || '';
+      });
+      return entry;
+    });
+
+    document.getElementById('searchBox').disabled = false;
+
+    document.getElementById('searchBox').addEventListener('input', function () {
+      const query = this.value.toLowerCase().trim();
+      const filtered = allData.filter(entry =>
+        Object.values(entry).some(value =>
+          value.toLowerCase().includes(query)
+        )
+      );
+      showResults(filtered);
+    });
+
+    function showResults(data) {
+      const container = document.getElementById('results');
+      container.innerHTML = '';
+
+      if (data.length === 0) {
+        container.innerHTML = '<p>No results found.</p>';
+        return;
+      }
+
+      data.forEach(entry => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+          <div class="field"><span>1) Account:</span> ${entry['Account'] || ''}</div>
+          <div class="field"><span>2) Subscriber Name:</span> ${entry['Subscriber name'] || ''}</div>
+          <div class="field"><span>3) Phone Number:</span> ${entry['Phone number'] || ''}</div>
+          <div class="field"><span>4) Address:</span> ${entry['Installation address'] || ''}</div>
+          <div class="field"><span>5) Node Name:</span> ${entry['Subscriber node'] || ''}</div>
+          <div class="field"><span>6) ONT Serial:</span> ${entry['ONT serial'] || ''}</div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+  </script>
 </body>
 </html>
