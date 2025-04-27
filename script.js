@@ -22,7 +22,7 @@ Papa.parse(csvData, {
       showResults(filtered);
     });
 
-    // Initialize display all results when page loads
+    // Display all data by default
     showResults(allData);
   }
 });
@@ -39,6 +39,7 @@ function showResults(data) {
   data.forEach((entry) => {
     const card = document.createElement('div');
     card.className = 'card';
+
     card.innerHTML = `
       <div class="field"><span>1) Account:</span> ${entry['Account'] || ''}</div>
       <div class="field"><span>2) Subscriber Name:</span> ${entry['Subscriber name'] || ''}</div>

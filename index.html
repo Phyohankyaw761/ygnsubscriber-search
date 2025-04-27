@@ -3,30 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Subscriber Search</title>
-  <link rel="stylesheet" href="style.css"> <!-- Optional if you have styles -->
-  <style>
-    /* Quick CSS inside if you don't have style.css */
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    #searchBox { width: 100%; padding: 10px; margin-bottom: 20px; font-size: 16px; }
-    .card { background: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .field { margin-bottom: 8px; }
-    span { font-weight: bold; }
-  </style>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <h1>Subscriber Search</h1>
 
   <input type="text" id="searchBox" placeholder="Search...">
-
   <div id="results"></div>
 
-  <!-- PapaParse library for parsing CSV -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-
-  <!-- Your data and script -->
   <script src="data.js"></script>
   <script src="script.js"></script>
-
 </body>
 </html>
