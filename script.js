@@ -1,14 +1,12 @@
 let allData = [];
 
-Papa.parse(csvData, {
+Papa.parse(csvData, {   // `csvData` should be defined as shown
   header: true,
   skipEmptyLines: true,
   complete: function(results) {
     allData = results.data;
-
     document.getElementById('searchBox').addEventListener('input', function () {
       const query = this.value.toLowerCase().trim();
-
       if (query === '') {
         showResults(allData);
         return;
@@ -22,8 +20,7 @@ Papa.parse(csvData, {
       showResults(filtered);
     });
 
-    // Display all data by default
-    showResults(allData);
+    showResults(allData);  // Show all data by default
   }
 });
 
@@ -39,7 +36,6 @@ function showResults(data) {
   data.forEach((entry) => {
     const card = document.createElement('div');
     card.className = 'card';
-
     card.innerHTML = `
       <div class="field"><span>1) Account:</span> ${entry['Account'] || ''}</div>
       <div class="field"><span>2) Subscriber Name:</span> ${entry['Subscriber name'] || ''}</div>
