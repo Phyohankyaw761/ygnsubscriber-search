@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trip Submission Form</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f9f9f9; }
+    form { background: white; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    input, button { width: 100%; padding: 10px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+
+  <h2>Submit Trip Data</h2>
+  <form id="tripForm">
+    <input type="date" name="date" required />
+    <input type="text" name="carNumber" placeholder="Car Number" required />
+    <input type="text" name="trip" placeholder="Trip Details" required />
+    <input type="time" name="startTime" required />
+    <input type="time" name="finishedTime" required />
+    <input type="number" name="totalHour" placeholder="Total Hour" required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById('tripForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const response = await fetch('https://your-backend-url.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        alert('Submitted successfully!');
+        e.target.reset();
+      } else {
+        alert('Submission failed.');
+      }
+    });
+  </script>
+
+</body>
+</html>
